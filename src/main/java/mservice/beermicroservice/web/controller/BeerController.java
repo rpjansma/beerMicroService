@@ -15,6 +15,16 @@ public class BeerController {
     @GetMapping("/{beerId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public ResponseEntity<BeerDto> getBeerById(@PathVariable("beerId") UUID id) {
-           return new ResponseEntity<>();
+           return new ResponseEntity<>(BeerDto.builder().build(), HttpStatus.OK);
+    }
+
+    @PostMapping
+    public ResponseEntity saveNewBeer(@RequestBody BeerDto beerDto) {
+        return new ResponseEntity(HttpStatus.CREATED);
+    }
+
+    @PutMapping("/{beerId}")
+    public ResponseEntity updateBeerById(@PathVariable("beerId") UUID beerId, @RequestBody BeerDto beerDto) {
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }
