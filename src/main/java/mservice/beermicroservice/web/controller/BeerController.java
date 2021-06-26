@@ -32,11 +32,13 @@ public class BeerController {
 
     @PutMapping("/{beerId}")
     public ResponseEntity updateBeerById(@PathVariable("beerId") UUID beerId, @RequestBody BeerDto beerDto) {
+        //todo update implementation
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
     @DeleteMapping("/{beerId}")
     public ResponseEntity deleteBeerById(@PathVariable UUID beerId) {
+        //todo delete implementation
         return new ResponseEntity(HttpStatus.ACCEPTED);
     }
 }
