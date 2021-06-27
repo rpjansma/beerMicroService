@@ -18,11 +18,13 @@ public class CustomerServiceImpl implements CustomerService {
     }
 
     @Override
-    public void updateCustomer(UUID customerId, CustomerDto customerDto) {}
-
-    @Override
     public CustomerDto saveNewCustomer(CustomerDto customerDto) {
         return null;
+    }
+
+    @Override
+    public void updateCustomer(UUID customerId, CustomerDto customerDto) {
+        log.debug("Updating a customer...");
     }
 
     @Override

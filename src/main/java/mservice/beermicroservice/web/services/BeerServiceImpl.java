@@ -30,4 +30,14 @@ public class BeerServiceImpl implements BeerService {
                     .build();
 
     }
+
+    @Override
+    public void updateCustomer(UUID beerId, BeerDto beerDto) {
+        log.debug("Updating a beer...");
+    }
+
+    @Override
+    public void deleteBeerById(UUID beerId) {
+        log.debug("Deleting a beer...");
+    }
 }

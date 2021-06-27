@@ -26,6 +26,7 @@ public class BeerController {
     @PostMapping
     public ResponseEntity saveNewBeer(@RequestBody BeerDto beerDto) {
         BeerDto savedDto = beerService.saveNewBeer(beerDto);
+        //todo post implementation
 
         return new ResponseEntity(HttpStatus.CREATED);
     }
@@ -38,7 +39,7 @@ public class BeerController {
 
     @DeleteMapping("/{beerId}")
     public ResponseEntity deleteBeerById(@PathVariable UUID beerId) {
-        //todo delete implementation
-        return new ResponseEntity(HttpStatus.ACCEPTED);
+        beerService.deleteBeerById(beerId);
+        return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 }
