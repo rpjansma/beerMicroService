@@ -9,6 +9,7 @@ import java.util.UUID;
 @Slf4j
 @Service
 public class CustomerServiceImpl implements CustomerService {
+
     @Override
     public CustomerDto getCustomerById(UUID id) {
         return CustomerDto.builder()

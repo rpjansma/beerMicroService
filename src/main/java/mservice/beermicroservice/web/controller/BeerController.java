@@ -2,38 +2,45 @@ package mservice.beermicroservice.web.controller;
 
 import mservice.beermicroservice.web.model.BeerDto;
 import mservice.beermicroservice.web.services.BeerService;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @RequestMapping("/api/v1/beer")
 @RestController
 public class BeerController {
 
-    @Autowired
-    public BeerService beerService;
+    private final BeerService beerService;
 
+    public BeerController(BeerService beerService) {
+        this.beerService = beerService;
+    }
 
     @GetMapping("/{beerId}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public ResponseEntity<BeerDto> getBeerById(@PathVariable("beerId") UUID id) {
-           return new ResponseEntity<>(BeerDto.builder().build(), HttpStatus.OK);
+    public ResponseEntity<BeerDto> getBeerById(@PathVariable("beerId") UUID beerId) {
+           return new ResponseEntity<>(beerService.getBeerById(beerId), HttpStatus.OK);
     }
 
     @PostMapping
-    public ResponseEntity saveNewBeer(@RequestBody BeerDto beerDto) {
-        BeerDto savedDto = beerService.saveNewBeer(beerDto);
-        //todo post implementation
+    public ResponseEntity saveNewBeer(@Valid @RequestBody BeerDto beerDto) {
+        BeerDto savedBeer = beerService.saveNewBeer(beerDto);
 
-        return new ResponseEntity(HttpStatus.CREATED);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Location", "api/v1/beer/" + savedBeer.getId().toString());
+
+        return new ResponseEntity(headers, HttpStatus.CREATED);
     }
 
     @PutMapping("/{beerId}")
-    public ResponseEntity updateBeerById(@PathVariable("beerId") UUID beerId, @RequestBody BeerDto beerDto) {
-        //todo update implementation
+    public ResponseEntity updateBeerById(@PathVariable("beerId") UUID beerId, @Valid @RequestBody BeerDto beerDto) {
+
+        beerService.updateBeer(beerId, beerDto);
+
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
 
@@ -42,4 +49,6 @@ public class BeerController {
         beerService.deleteBeerById(beerId);
         return new ResponseEntity(HttpStatus.NO_CONTENT);
     }
+
+
 }
